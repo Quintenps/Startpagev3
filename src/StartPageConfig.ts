@@ -14,11 +14,14 @@ export class StartPageConfig {
       entertainment: [
         { url: "//nu.nl", title: "NU" },
         { url: "//lowendtalk.com", title: "LowendTalk" },
+        { url: "//tweakers.net", title: "Tweakers" },
         { url: "//news.ycombinator.com", title: "The HackerNews" },
-        { url: "//github.com/trending", title: "Github Trending" }
+        { url: "//github.com/trending", title: "Github Trending" },
+        { url: "//www.autoweek.nl/", title: "Autoweek" },
       ],
       other: [
         { url: "//www.myfitnesspal.com/food/diary", title: "MyFitnessPal" },
+        { url: "//start.exactonline.nl/", title: "Exact" },
         { url: "//royals.ms/vote", title: "MapleRoyals vote" }
       ]
     };
