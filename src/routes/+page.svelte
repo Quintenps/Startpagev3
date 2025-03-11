@@ -48,7 +48,7 @@
 
 <div class="min-h-screen flex bg-slate-200 dark:bg-slate-800">
   <div
-    class="container mx-auto max-w-5xl items-center flex flex-col lg:justify-center gap-4 text-slate-800 dark:text-slate-300"
+    class="container mx-auto px-8 max-w-5xl items-center flex flex-col lg:justify-center gap-4 text-slate-800 dark:text-slate-300"
   >
     <div class="flex flex-row justify-center">
       <img src={mascot} alt="Mascot" class="max-w-24" />
