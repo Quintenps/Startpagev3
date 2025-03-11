@@ -1,4 +1,3 @@
-import type { LinkConfig } from "$lib/link-config";
 import {
   getCachedRssFeed,
   type RssCache,
@@ -6,18 +5,9 @@ import {
 import { type RequestHandler } from "@sveltejs/kit";
 import { StartPageConfig } from "../../../StartPageConfig";
 
-export type Config = {
-  links: LinkConfig;
-  rss: RssCache;
-};
-
 export const GET: RequestHandler = async (event) => {
   try {
-    const config: Config = {
-      links: StartPageConfig.LINKS,
-      rss: await getCachedRssFeed(StartPageConfig.RSS_FEEDS),
-    };
-
+    const config: RssCache = await getCachedRssFeed(StartPageConfig.RSS_FEEDS);
     return new Response(JSON.stringify(config), {
       headers: { "Content-Type": "application/json" },
     });

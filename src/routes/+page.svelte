@@ -6,18 +6,20 @@
   import H2 from "$lib/components/H2.svelte";
   import { onMount } from "svelte";
   import Loading from "$lib/components/Loading.svelte";
-  import type { Config } from "./api/config/+server";
+  import { StartPageConfig } from "../StartPageConfig";
+  import type { RssCache } from "$lib/rss-service";
 
   let loading: Boolean = true;
-  let config: Config;
+  let rssCache: RssCache;
   let links: [string, LinkItem[]][] = [];
 
   onMount(async () => {
     try {
+      links = Object.entries(StartPageConfig.LINKS);
+
       const res = await fetch("/api/config");
       if (!res.ok) throw new Error("Failed to fetch data");
-      config = await res.json();
-      links = Object.entries(config.links);
+      rssCache = await res.json();
     } catch (err) {
       console.log("An error occured trying to fetch config");
       console.log(err);
@@ -54,9 +56,6 @@
     <div class="flex flex-col w-full md:gap-8 md:flex-row">
       <div class="w-full md:w-1/3">
         <H1 text="Links" />
-        {#if loading}
-          <Loading />
-        {:else if config}
           {#each links as [category, linkItems]}
             <div class="my-2 md:my-0 md:mb-4">
               <H2 text={category} />
@@ -67,20 +66,19 @@
               </div>
             </div>
           {/each}
-        {/if}
       </div>
       <div class="w-full md:w-2/3">
         <div class="my-2 md:my-0">
           <H1 text="RSS" />
           {#if loading}
             <Loading />
-          {:else if config}
+          {:else if rssCache}
             <p class="text-xs py-2">
-              Last fetched: {getMinutesAgo(config.rss.lastFetched)}
+              Last fetched: {getMinutesAgo(rssCache.lastFetched)}
             </p>
             <div class="flex flex-col flex-wrap gap-2">
-              {#if config}
-                {#each config.rss.data.slice(0, 10) as rssItem}
+              {#if rssCache}
+                {#each rssCache.data.slice(0, 10) as rssItem}
                   <Link title={rssItem.title} url={rssItem.url} />
                 {/each}
               {/if}
