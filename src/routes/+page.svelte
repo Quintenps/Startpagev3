@@ -33,6 +33,10 @@
     const now = new Date();
     const differenceInMs = now.getTime() - lastFetchedDate.getTime();
 
+    if (differenceInMs < 1000) {
+      return `Just now`;
+    }
+
     if (differenceInMs < 60_000) {
       return `${Math.floor(differenceInMs / 1000)} seconds ago`;
     }
