@@ -18,13 +18,13 @@ export class StartPageConfig {
         { url: "//news.ycombinator.com", title: "The HackerNews" },
         { url: "//github.com/trending", title: "Github Trending" },
         { url: "//www.autoweek.nl/", title: "Autoweek" },
+        { url: "//livestreamfails.com/", title: "Livestreamfails" },
       ],
       other: [
         { url: "//www.myfitnesspal.com/food/diary", title: "MyFitnessPal" },
         { url: "//start.exactonline.nl/", title: "Exact" },
         { url: "//royals.ms/vote", title: "MapleRoyals vote" },
-        { url: "https://docs.google.com/spreadsheets/d/1q40bD2me8TKLovc9tysyQSGxRtEP6k2OlTT6EWdvtSc/edit?gid=0#gid=0", title: "Gym spreadsheet" },
-        { url: "https://docs.google.com/spreadsheets/d/1McUoEBz7u_4frvzBbh9TswtZPaoVE4q9UdcOYIY7tNs/edit?usp=drive_link", title: "Weight spreadsheet" },
+        { url: "https://docs.google.com/spreadsheets/d/1q40bD2me8TKLovc9tysyQSGxRtEP6k2OlTT6EWdvtSc/edit?gid=0#gid=0", title: "Gym spreadsheet" }
       ]
     };
   }
