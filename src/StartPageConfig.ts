@@ -21,7 +21,7 @@ export class StartPageConfig {
         { url: "//livestreamfails.com/", title: "Livestreamfails" },
       ],
       other: [
-        { url: "//192.168.1.48", title: "Homelab" },
+        { url: "http://192.168.1.48", title: "Homelab" },
         { url: "//www.myfitnesspal.com/food/diary", title: "MyFitnessPal" },
         { url: "//start.exactonline.nl/", title: "Exact" },
         { url: "//royals.ms/vote", title: "MapleRoyals vote" },
