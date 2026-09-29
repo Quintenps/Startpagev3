@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f1f3ec" />
+    <title>Startpage</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/styles.css" />
+    <script type="module" src="/app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="page-shell">
+      <header class="masthead">
+        <div class="masthead-brand">
+          <img class="mascot" src="/mascot.gif" />
+          <div class="masthead-copy">
+            <h1>Startpage</h1>
+            <p class="masthead-date"><time id="local-clock"></time><span id="local-date"></span></p>
+          </div>
+        </div>
+        <div class="theme-control" role="radiogroup" aria-label="Color theme">
+          <button class="theme-option" type="button" role="radio" data-theme-option="auto" aria-checked="true" tabindex="0">Auto</button>
+          <button class="theme-option" type="button" role="radio" data-theme-option="light" aria-checked="false" tabindex="-1">Light</button>
+          <button class="theme-option" type="button" role="radio" data-theme-option="night" aria-checked="false" tabindex="-1">Night</button>
+        </div>
+      </header>
+
+      <main id="main" class="content-grid">
+        <section class="links-section" aria-labelledby="links-heading">
+          <div class="section-heading">
+            <h2 id="links-heading">Links</h2>
+            <span class="section-index" aria-hidden="true">01</span>
+          </div>
+          <div id="link-groups" class="link-groups"></div>
+        </section>
+
+        <section class="rss-section" aria-labelledby="rss-heading">
+          <div class="section-heading">
+            <h2 id="rss-heading">Latest stories</h2>
+            <div class="rss-heading-actions">
+              <button id="rss-refresh" class="rss-refresh" type="button">Refresh</button>
+              <span class="section-index" aria-hidden="true">02</span>
+            </div>
+          </div>
+          <p id="rss-status" class="rss-status" role="status" aria-live="polite">Loading stories...</p>
+          <ol id="rss-items" class="rss-items"></ol>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
