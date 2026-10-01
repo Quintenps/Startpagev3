@@ -134,7 +134,12 @@ export function mergeStories(feeds) {
 export function withStaleFallback(result, staleResult) {
   if (!result.unavailable) return { ...result, stale: false };
   if (staleResult && Array.isArray(staleResult.data)) {
-    return { ...staleResult, unavailable: true, stale: true };
+    return {
+      ...staleResult,
+      unavailable: true,
+      stale: true,
+      failedFeeds: result.failedFeeds ?? [],
+    };
   }
   return { ...result, stale: false };
 }
@@ -143,18 +148,27 @@ export async function fetchAllFeeds(feedUrls = config.rssFeeds, fetchImplementat
   const urls = Array.isArray(feedUrls) ? feedUrls.map(normalizeFeedUrl).filter(Boolean) : [];
   const results = await Promise.allSettled(urls.map((url) => fetchFeed(url, fetchImplementation)));
   const successfulFeeds = results.filter((result) => result.status === "fulfilled").length;
+  const failedFeeds = results.flatMap((result, index) => {
+    if (result.status !== "rejected") return [];
+    const error = result.reason instanceof Error ? result.reason.message : String(result.reason);
+    return [{ url: urls[index], error }];
+  });
   const data = mergeStories(results.flatMap((result) => result.status === "fulfilled" ? [result.value] : []));
 
   return {
     lastFetched: Date.now(),
     data,
+    failedFeeds,
     unavailable: successfulFeeds === 0,
     stale: false,
   };
 }
 
 function jsonResponse(body, maxAgeSeconds = 0) {
-  return new Response(JSON.stringify(body), {
+  const payload = Array.isArray(body?.data) && !Array.isArray(body.failedFeeds)
+    ? { ...body, failedFeeds: [] }
+    : body;
+  return new Response(JSON.stringify(payload), {
     headers: {
       "Content-Type": "application/json; charset=utf-8",
       "Cache-Control": maxAgeSeconds > 0 ? `public, max-age=${maxAgeSeconds}` : "no-store",

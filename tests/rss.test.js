@@ -48,6 +48,10 @@ test("partial feed failure retains successful stories", async () => {
 
   assert.equal(result.unavailable, false);
   assert.equal(result.data.length, 1);
+  assert.deepEqual(result.failedFeeds, [{
+    url: "https://feeds.example.test/down.xml",
+    error: "Feed returned 502: https://feeds.example.test/down.xml",
+  }]);
 });
 
 test("oversized feed responses are rejected before XML parsing", async () => {
@@ -82,6 +86,10 @@ test("complete feed failure preserves stale stories and marks them unavailable",
   assert.equal(result.stale, true);
   assert.deepEqual(result.data, saved.data);
   assert.equal(result.lastFetched, saved.lastFetched);
+  assert.deepEqual(result.failedFeeds, [{
+    url: feedUrl,
+    error: `Feed returned 503: ${feedUrl}`,
+  }]);
 });
 
 test("endpoint caches total failures briefly after returning stale data", async () => {
