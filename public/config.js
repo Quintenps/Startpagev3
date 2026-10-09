@@ -1,7 +1,7 @@
 export const config = {
   rssFeeds: [
     "https://www.security.nl/rss/headlines.xml",
-    "https://news.ycombinator.com/rss",
+    "https://news.ycombinator.com/rss/",
     "https://krebsonsecurity.com/feed/",
   ],
   links: {
