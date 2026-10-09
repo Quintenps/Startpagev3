@@ -20,7 +20,7 @@ export const config = {
       { url: "//livestreamfails.com/", title: "Livestreamfails" },
     ],
     other: [
-      { url: "//192.168.1.48", title: "Homelab" },
+      { url: "http://homepage.default.svc.cluster.local", title: "Homelab" },
       {
         url: "https://docs.google.com/spreadsheets/d/15ZnQydcf5_NyXJkyzgxDAgdcXgeJC_9dXOIO6GNKfjE/edit?usp=sharing",
         title: "Gym spreadsheet",
