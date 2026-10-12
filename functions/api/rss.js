@@ -83,13 +83,7 @@ export async function fetchFeed(value, fetchImplementation = fetch) {
   if (!url) throw new Error("Feed URL must use http or https");
   const source = new URL(url).hostname.replace(/^www\./, "");
 
-  const response = await fetchImplementation(url, {
-    headers: {
-      Accept: "application/rss+xml, application/atom+xml, application/xml, text/xml",
-      "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 26_5_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/153.0.8010.26 Mobile/15E148 Safari/604.1",
-    },
-    signal: AbortSignal.timeout(12_000),
-  });
+  const response = await fetchImplementation(url);
   if (!response.ok) throw new Error(`Feed returned ${response.status}: ${url}`);
 
   const xml = xmlParser.parse(await responseText(response));

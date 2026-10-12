@@ -28,10 +28,10 @@ test("feed URL validation accepts only HTTP and HTTPS", () => {
   assert.equal(normalizeFeedUrl(null), null);
 });
 
-test("feed requests identify the application with a descriptive User-Agent", async () => {
-  let requestOptions;
-  await fetchFeed(feedUrl, async (_url, options) => {
-    requestOptions = options;
+test("feed requests use the default fetch headers and options", async () => {
+  let requestArguments;
+  await fetchFeed(feedUrl, async (...args) => {
+    requestArguments = args;
     return new Response(xml([{
       title: "Header test",
       url: "https://news.example.test/header-test",
@@ -39,10 +39,7 @@ test("feed requests identify the application with a descriptive User-Agent", asy
     }]));
   });
 
-  assert.equal(
-    requestOptions.headers["User-Agent"],
-    "Mozilla/5.0 (iPhone; CPU iPhone OS 26_5_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/153.0.8010.26 Mobile/15E148 Safari/604.1",
-  );
+  assert.deepEqual(requestArguments, [feedUrl]);
 });
 
 test("invalid feed entries do not prevent valid feeds from loading", async () => {
