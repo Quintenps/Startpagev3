@@ -22,7 +22,7 @@ export const config = {
     other: [
       { url: "http://homepage.default.svc.cluster.local", title: "Homelab" },
       {
-        url: "https://docs.google.com/spreadsheets/d/15ZnQydcf5_NyXJkyzgxDAgdcXgeJC_9dXOIO6GNKfjE/edit?usp=sharing",
+        url: "https://docs.google.com/spreadsheets/d/13W6KCogiRJPt5h1cNdZEuXSKUnw_1lp0tqWHEwwBafk/edit?usp=sharing",
         title: "Gym spreadsheet",
       },
     ],
