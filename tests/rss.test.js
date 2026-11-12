@@ -28,7 +28,7 @@ test("feed URL validation accepts only HTTP and HTTPS", () => {
   assert.equal(normalizeFeedUrl(null), null);
 });
 
-test("feed requests use the default fetch headers and options", async () => {
+test("feed requests identify the RSS reader and accept feed formats", async () => {
   let requestArguments;
   await fetchFeed(feedUrl, async (...args) => {
     requestArguments = args;
@@ -39,7 +39,12 @@ test("feed requests use the default fetch headers and options", async () => {
     }]));
   });
 
-  assert.deepEqual(requestArguments, [feedUrl]);
+  assert.deepEqual(requestArguments, [feedUrl, {
+    headers: {
+      Accept: "application/rss+xml, application/atom+xml, application/xml, text/xml",
+      "User-Agent": "Quinten's RSS reader",
+    },
+  }]);
 });
 
 test("invalid feed entries do not prevent valid feeds from loading", async () => {

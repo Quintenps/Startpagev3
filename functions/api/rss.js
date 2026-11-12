@@ -83,7 +83,12 @@ export async function fetchFeed(value, fetchImplementation = fetch) {
   if (!url) throw new Error("Feed URL must use http or https");
   const source = new URL(url).hostname.replace(/^www\./, "");
 
-  const response = await fetchImplementation(url);
+  const response = await fetchImplementation(url, {
+    headers: {
+      Accept: "application/rss+xml, application/atom+xml, application/xml, text/xml",
+      "User-Agent": "Quinten's RSS reader",
+    },
+  });
   if (!response.ok) throw new Error(`Feed returned ${response.status}: ${url}`);
 
   const xml = xmlParser.parse(await responseText(response));
