@@ -9,6 +9,7 @@ import {
   onRequestGet,
   withStaleFallback,
 } from "../functions/api/rss.js";
+import { config } from "../public/config.js";
 
 const feedUrl = "https://feeds.example.test/news.xml";
 const xml = (items) => `<rss><channel>${items.map((item) => (
@@ -119,11 +120,12 @@ test("endpoint caches total failures briefly after returning stale data", async 
   const hadCaches = Object.hasOwn(globalThis, "caches");
   let now = 1_800_000_000_000;
   let calls = 0;
+  const feedCount = config.rssFeeds.length;
   Date.now = () => now;
   delete globalThis.caches;
   globalThis.fetch = async () => {
     calls += 1;
-    if (calls === 1) {
+    if (calls <= feedCount) {
       return new Response(xml([{ title: "Saved", url: "https://news.example.test/saved", pubDate: "" }]));
     }
     return new Response("", { status: 503 });
@@ -133,10 +135,10 @@ test("endpoint caches total failures briefly after returning stale data", async 
     const request = new Request("https://startpage.example.test/api/rss");
     const first = await (await onRequestGet({ request })).json();
     assert.equal(first.data[0].title, "Saved");
-    assert.equal(calls, 3);
+    assert.equal(calls, feedCount);
     const cached = await (await onRequestGet({ request })).json();
     assert.equal(cached.data[0].title, "Saved");
-    assert.equal(calls, 3);
+    assert.equal(calls, feedCount);
 
     now += 15 * 60 * 1000 + 1;
     const failedResponse = await onRequestGet({ request });
@@ -145,10 +147,10 @@ test("endpoint caches total failures briefly after returning stale data", async 
     assert.equal(failed.stale, true);
     assert.equal(failed.data[0].title, "Saved");
     assert.equal(failedResponse.headers.get("cache-control"), "no-store");
-    assert.equal(calls, 6);
+    assert.equal(calls, feedCount * 2);
 
     await onRequestGet({ request });
-    assert.equal(calls, 6);
+    assert.equal(calls, feedCount * 2);
   } finally {
     globalThis.fetch = originalFetch;
     Date.now = originalDateNow;
