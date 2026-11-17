@@ -25,7 +25,7 @@ function applyTheme() {
   }
 
   const isNight = activeTheme === "night" || (activeTheme === "auto" && systemTheme.matches);
-  document.querySelector('meta[name="theme-color"]').content = isNight ? "#343A3C" : "#f1f3ec";
+  document.querySelector('meta[name="theme-color"]').content = isNight ? "#24283b" : "#eff1f5";
 }
 
 function selectTheme(option) {
